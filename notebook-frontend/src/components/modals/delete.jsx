@@ -58,7 +58,7 @@ class DeleteModal extends Component {
 				</Modal.Body>
 				<Modal.Footer>
 					<Button onClick={this.handleClose}>No</Button>
-					<Button className="btn-delete" onClick={this.handleDelete}>
+					<Button className="btn-danger" onClick={this.handleDelete}>
 						Yes
 					</Button>
 				</Modal.Footer>

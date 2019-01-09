@@ -248,6 +248,7 @@
 			padding: 0.8rem;
 			resize: none;
 			color: $color-black;
+			border: none;
 		}
 		& textarea:focus,
 		& textarea:active {
@@ -268,7 +269,7 @@
 	user-select: none;
 }
 .auth {
-	height: 50vh;
+	height: 55vh;
 	max-width: 20%;
 	background-color: $color-grey-light-1;
 	position: relative;
@@ -334,6 +335,11 @@
 	&_link {
 		color: $color-black;
 		text-align: left;
+		&:visited,
+		&:hover {
+			text-decoration: none;
+			color: $color-black;
+		}
 	}
 	&_button {
 		margin-left: calc(55% - 2rem);
@@ -345,6 +351,7 @@
 		outline: none;
 		border-radius: 2px;
 		transition: all 0.2s;
+		min-width: 6rem;
 		&:focus {
 			outline: none;
 			border: none;
@@ -356,6 +363,59 @@
 		}
 	}
 }
-// transitions
-.slide-up {
+.slide-appear {
+	height: 0;
+	opacity: 0;
+	transform: translate(-50%, -150%);
+}
+.slide-appear.slide-appear-active {
+	height: 55vh;
+	opacity: 1;
+	transform: translate(-50%, -50%);
+	transition: all 1s;
+}
+.slide-exit {
+	height: 50vh;
+	opacity: 1;
+	transform: translate(-50%, -50%);
+}
+.slide-exit.slide-exit-active {
+	height: 0;
+	opacity: 0;
+	transform: translate(-50%, -150%);
+	transition: all 1s;
+}
+.slide-exit-done {
+	height: 0;
+	opacity: 0;
+	transform: translate(-50%, -150%);
+}
+.slide-big-appear {
+	height: 0;
+	opacity: 0;
+	transform: translate(-50%, -150%);
+}
+.slide-big-appear.slide-big-appear-active {
+	height: 80vh;
+	opacity: 1;
+	transform: translate(-50%, -50%);
+	transition: all 1s;
+}
+.slide-long-appear {
+	width: 0%;
+	opacity: 0;
+}
+.slide-long-appear.slide-long-appear-active {
+	width: 100%;
+	opacity: 1;
+	transition: all 1s;
+}
+.zoom-content-appear {
+	opacity: 0;
+	height: 0;
+}
+.zoom-content-appear.zoom-content-appear-active {
+	height: 70vh;
+	opacity: 1;
+	transition: all 1s;
 }

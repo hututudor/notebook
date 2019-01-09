@@ -7,7 +7,7 @@ import Loader from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { updateNotes } from '../redux/actions';
-import { Slide, Zoom } from 'react-reveal';
+import { CSSTransition } from 'react-transition-group';
 
 class Main extends Component {
 	state = {
@@ -15,6 +15,7 @@ class Main extends Component {
 	};
 
 	componentDidMount() {
+		document.title = 'Notebook';
 		axios
 			.get('/notes', {
 				headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
@@ -35,28 +36,55 @@ class Main extends Component {
 
 	render() {
 		return (
-			// <Zoom>
-			<div className="main">
-				{this.state.loading ? (
-					<div className="main_centered">
-						<Loader type="TailSpin" color="#000" height="100" width="100" />
-					</div>
-				) : (
-					<React.Fragment>
-						<Header />
-						<Content notes={this.props.notes} />
-						<Footer />
-					</React.Fragment>
-				)}
-			</div>
-			// {/* </Zoom> */}
+			<CSSTransition
+				in={true}
+				appear={true}
+				timeout={1000}
+				classNames="slide-big"
+			>
+				<div className="main">
+					{this.state.loading ? (
+						<div className="main_centered">
+							<Loader type="TailSpin" color="#000" height="100" width="100" />
+						</div>
+					) : (
+						<React.Fragment>
+							<CSSTransition
+								in={true}
+								appear={true}
+								timeout={1000}
+								classNames="slide-long"
+							>
+								<Header />
+							</CSSTransition>
+							<CSSTransition
+								in={true}
+								appear={true}
+								timeout={1000}
+								classNames="zoom-content"
+							>
+								<Content notes={this.props.notes} />
+							</CSSTransition>
+							<CSSTransition
+								in={true}
+								appear={true}
+								timeout={1000}
+								classNames="slide-long"
+							>
+								<Footer />
+							</CSSTransition>
+						</React.Fragment>
+					)}
+				</div>
+			</CSSTransition>
 		);
 	}
 }
 
 const mapStateToProps = state => {
 	return {
-		notes: state.notes
+		notes: state.notes,
+		user: state.user
 	};
 };
 

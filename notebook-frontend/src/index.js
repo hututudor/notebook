@@ -5,11 +5,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import { updateUser } from './redux/actions';
-import './main.scss';
+import scss from './main.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 window.store = store;
+
+console.log(scss);
 
 // The render function
 const rend = () => {

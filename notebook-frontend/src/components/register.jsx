@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import { updateUser } from '../redux/actions';
 import { connect } from 'react-redux';
 
+import { CSSTransition } from 'react-transition-group';
+
 class Register extends Component {
 	state = {
 		name: '',
@@ -19,6 +21,7 @@ class Register extends Component {
 		if (localStorage.getItem('token')) {
 			this.props.history.push('/');
 		}
+		document.title = 'Notebook | Register';
 	}
 
 	handleLogin = e => {
@@ -43,7 +46,9 @@ class Register extends Component {
 				})
 				.catch(err => {
 					console.log(err);
-					toast.error('Credentials are incorrect');
+					for (let prop in err.response.data) {
+						toast.error(err.response.data[prop][0]);
+					}
 				});
 		}
 	};
@@ -94,52 +99,58 @@ class Register extends Component {
 
 	render() {
 		return (
-			<div className="auth">
-				<h1 className="auth_logo">Notebook</h1>
-				<h1 className="auth_title">Register</h1>
-				<form className="auth_form">
-					<input
-						className={
-							'auth_input ' + (this.state.nameError === '' ? '' : 'invalid')
-						}
-						name="name"
-						value={this.state.name}
-						onChange={this.handleChange}
-						placeholder="Name"
-					/>
-					{this.errorMessage('name')}
-					<input
-						className={
-							'auth_input ' + (this.state.emailError === '' ? '' : 'invalid')
-						}
-						name="email"
-						value={this.state.email}
-						onChange={this.handleChange}
-						placeholder="E-mail"
-					/>
-					{this.errorMessage('email')}
-					<input
-						className={
-							'auth_input ' + (this.state.passwordError === '' ? '' : 'invalid')
-						}
-						name="password"
-						type="password"
-						value={this.state.password}
-						onChange={this.handleChange}
-						placeholder="Password"
-					/>
-					{this.errorMessage('password')}
-					<br />
-					<div className="auth_container">
-						<Link className="auth_link" to="/login">
-							Login
-						</Link>
-						<button onClick={this.handleLogin} className="auth_button">
-							Register
-						</button>
-					</div>
-				</form>
-			</div>
+			<CSSTransition in={true} appear={true} timeout={1000} classNames="slide">
+				<div className="auth">
+					<h1 className="auth_logo">Notebook</h1>
+					<h1 className="auth_title">Register</h1>
+					<form className="auth_form">
+						<input
+							className={
+								'auth_input ' + (this.state.nameError === '' ? '' : 'invalid')
+							}
+							name="name"
+							value={this.state.name}
+							onChange={this.handleChange}
+							placeholder="Name"
+							autoComplete="off"
+						/>
+						{this.errorMessage('name')}
+						<input
+							className={
+								'auth_input ' + (this.state.emailError === '' ? '' : 'invalid')
+							}
+							name="email"
+							value={this.state.email}
+							onChange={this.handleChange}
+							placeholder="E-mail"
+							autoComplete="off"
+						/>
+						{this.errorMessage('email')}
+						<input
+							className={
+								'auth_input ' +
+								(this.state.passwordError === '' ? '' : 'invalid')
+							}
+							name="password"
+							type="password"
+							value={this.state.password}
+							onChange={this.handleChange}
+							placeholder="Password"
+							autoComplete="off"
+						/>
+						{this.errorMessage('password')}
+						<br />
+						<div className="auth_container">
+							<Link className="auth_link" to="/login">
+								Login
+							</Link>
+							<button onClick={this.handleLogin} className="auth_button">
+								Register
+							</button>
+						</div>
+					</form>
+				</div>
+			</CSSTransition>
 		);
 	}
 }

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { logout } from '../redux/actions';
+import { logout, updateCurrentNote, updateNotes } from '../redux/actions';
 
 class Header extends Component {
 	handleLogout = () => {
 		localStorage.removeItem('token');
+		this.props.updateNotes();
 		this.props.logout();
 	};
 
@@ -31,7 +32,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		logout: () => dispatch(logout())
+		logout: () => dispatch(logout()),
+		updateNotes: () => {
+			dispatch(updateNotes([]));
+			dispatch(updateCurrentNote({}));
+		}
 	};
 };
 
