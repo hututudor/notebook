@@ -29,7 +29,9 @@ const rend = () => {
 let token = localStorage.getItem('token');
 if (token) {
 	axios
-		.get('/user', { headers: { Authorization: 'Bearer ' + token } })
+		.get(process.env.REACT_APP_API_URL + '/user', {
+			headers: { Authorization: 'Bearer ' + token }
+		})
 		.then(res => {
 			if (res.status === 200) {
 				console.log(res.data.user);

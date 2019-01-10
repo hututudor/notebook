@@ -47,15 +47,10 @@ class AddModal extends Component {
 		}
 		axios
 			.put(
-				'/notes/' + this.props.options.note.id,
+				process.env.REACT_APP_API_URL + '/notes/' + this.props.options.note.id,
+				{ name: this.state.name, body: this.props.options.note.body },
 				{
-					name: this.state.name,
-					body: this.props.options.note.body
-				},
-				{
-					headers: {
-						Authorization: 'Bearer ' + localStorage.getItem('token')
-					}
+					headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
 				}
 			)
 			.then(res => {

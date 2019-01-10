@@ -33,7 +33,7 @@ class Sidebar extends Component {
 			if (this.props.notes[index].body !== this.props.note.body) {
 				axios
 					.put(
-						`/notes/${this.props.note.id}`,
+						process.env.REACT_APP_API_URL + `/notes/${this.props.note.id}`,
 						{
 							name: this.props.note.name,
 							body: this.props.note.body === null ? ' ' : this.props.note.body

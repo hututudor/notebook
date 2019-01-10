@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class NotesController extends Controller {
     public function getAll() {
         $user = AuthController::getUser();
-        $notes = $user->notes()->orderBy('updated_at', 'desc')->get();
+        $notes = $user->notes()->orderBy('created_at', 'desc')->get();
 
         return response()->json(compact('notes'), 200);
     }
@@ -56,7 +56,7 @@ class NotesController extends Controller {
     public function edit($id, Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
-            'body' => ['required', 'string']
+            'body' => ['nullable', 'string']
         ]);
 
         if($validator->fails() ) {

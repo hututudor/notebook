@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Note;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
@@ -23,7 +25,9 @@ class AuthController extends Controller {
             return response()->json(['error' => 'Could not create token'], 500);
         }
 
-        return response()->json(compact('token'));
+        $user = User::where('email', $request->email)->first();
+
+        return response()->json(compact('user', 'token'));
     }
 
     public function register(Request $request) {
@@ -44,6 +48,14 @@ class AuthController extends Controller {
         ]);
 
         $token = JWTAuth::fromUser($user);
+
+        $info = \view('info', ['user' => $user->name])->render();
+
+        $note = new Note();
+        $note->user_id = $user->id;
+        $note->name = 'Welcome';
+        $note->body = $info;
+        $note->save();
 
         return response()->json(compact('user', 'token'), 201);
     }

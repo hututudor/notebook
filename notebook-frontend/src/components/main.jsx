@@ -17,8 +17,10 @@ class Main extends Component {
 	componentDidMount() {
 		document.title = 'Notebook';
 		axios
-			.get('/notes', {
-				headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+			.get(process.env.REACT_APP_API_URL + '/notes', {
+				headers: {
+					Authorization: 'Bearer ' + localStorage.getItem('token')
+				}
 			})
 			.then(res => {
 				console.log(res);

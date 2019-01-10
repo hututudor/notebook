@@ -32,7 +32,7 @@ class Login extends Component {
 			this.validate('password', this.state.password)
 		) {
 			axios
-				.post('/login', {
+				.post(process.env.REACT_APP_API_URL + '/login', {
 					email: this.state.email,
 					password: this.state.password
 				})

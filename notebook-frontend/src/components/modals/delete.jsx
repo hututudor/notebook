@@ -27,11 +27,14 @@ class DeleteModal extends Component {
 
 	deleteNote = () => {
 		axios
-			.delete('/notes/' + this.props.options.note.id, {
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('token')
+			.delete(
+				process.env.REACT_APP_API_URL + '/notes/' + this.props.options.note.id,
+				{
+					headers: {
+						Authorization: 'Bearer ' + localStorage.getItem('token')
+					}
 				}
-			})
+			)
 			.then(res => {
 				toast.success("Deleted note '" + this.props.options.note.name + "'");
 				this.props.deleteNote(this.props.options.note);

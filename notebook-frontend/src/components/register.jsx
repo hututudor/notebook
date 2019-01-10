@@ -32,7 +32,7 @@ class Register extends Component {
 			this.validate('password', this.state.password)
 		) {
 			axios
-				.post('/register', {
+				.post(process.env.REACT_APP_API_URL + '/register', {
 					name: this.state.name,
 					email: this.state.email,
 					password: this.state.password
